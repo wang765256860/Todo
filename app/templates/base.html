@@ -1,58 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-{% block head %}
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %}</title>
-    <link href="{{ url_for('static', filename='css/minty.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-{% endblock %}
-</head>
-<body>
-{% block nav %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Todo</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation"
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<nav class="blue lighten-2" role="navigation">
+    <div class="nav-wrapper container">
+        <a href="#intro" class="brand-logo "><span class="red-text">Todo</span></a>
+        <ul class="right hide-on-med-and-down">
+            {% if current_user.is_authenticated %}
+                <li>
+                    <a href="#app" class="waves-effect waves-light btn green">{{ current_user.username }}
+                        <span class="new badge red" id="active-count-nav">{{ active_items }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="waves-effect waves-light" id="logout-btn" data-href="{{ url_for('auth.logout') }}">
+                        <i class="material-icons">power_settings_new</i>
+                    </a>
+                </li>
+            {% else %}
+                <li><a href="#login" class="waves-effect waves-light btn red">Login</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
 
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="nav navbar-nav navbar-right">
-                {% if current_user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="btn btn-warning my-2 my-sm-0" href="{{ url_for('auth.logout') }}">Logout</a>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a class="btn btn-secondary my-2 my-sm-0" href="{{ url_for('auth.login') }}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="btn btn-info my-2 my-sm-0" href="{{ url_for('auth.register') }}">Register</a>
-                </li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
-{% endblock %}
-<main class="container">
-    {% for message in get_flashed_messages(with_categories=True) %}
-        <div class="alert alert-{{ message[0] }}" role="alert">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            {{ message[1] }}
-        </div>
-    {% endfor %}
-    {% block page_content %}{% endblock %}
-    {% block footer %}
-        <footer>
-            <p class="float-left">
-                <small>&copy; 2018
-
-                </small>
-            </p>
-        </footer>
-    {% endblock %}
+<main>
+    {% block content %}{% endblock %}
 </main>
-</body>
-</html>

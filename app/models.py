@@ -9,7 +9,6 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
-    name = db.Column(db.String(64))
     todos = db.relationship('Todo', backref='author', cascade='all')
 
     @property
@@ -34,6 +33,4 @@ class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.Text)
     done = db.Column(db.Boolean, default=False)
-    created_time = db.Column(db.DateTime(), default=datetime.utcnow)
-    modified_time = db.Column(db.DateTime(), default=datetime.utcnow)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
