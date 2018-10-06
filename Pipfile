@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 flask = "*"
 flask-login = "*"
-flask-moment = "*"
 flask-sqlalchemy = "*"
 faker = "*"
 python-dotenv = "*"

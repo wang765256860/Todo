@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, request, jsonify, Blueprint
 from flask_login import login_user, logout_user, login_required, current_user
-from ..models import User, Todo
+from ..models import User, Item
 from .. import db
 from faker import Faker
 
@@ -10,9 +10,8 @@ fake = Faker()
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    print('data是什么', request.get_json())
-    # if current_user.is_authenticated:
-    #     return redirect(url_for('todo.index'))
+    if current_user.is_authenticated:
+        return redirect(url_for('todo.app'))
 
     if request.method == 'POST':
         data = request.get_json()
@@ -45,9 +44,9 @@ def register():
     db.session.commit()
 
     # 生成默认的todo项目
-    todo = Todo(body='这是一条默认的 todo ', author=user)
-    todo2 = Todo(body='这是一条完成了的 todo ', done=True, author=user)
-    db.session.add_all([todo, todo2])
+    item = Item(body='这是一条默认的 todo ', author=user)
+    item2 = Item(body='这是一条完成了的 todo ', done=True, author=user)
+    db.session.add_all([item, item2])
     db.session.commit()
 
     return jsonify(username=username, password=password, message='生成成功')

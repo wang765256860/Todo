@@ -21,6 +21,10 @@
     var logout_url = "{{ url_for('auth.logout') }}";
     var intro_page_url = "{{ url_for('home.intro') }}";
     var login_url = "{{ url_for('auth.login') }}";
+    var app_page_url = "{{ url_for('todo.app') }}";
+    var new_item_url = "{{ url_for('todo.new_item') }}"
+    var clear_item_url = "{{ url_for('todo.clear_item') }}"
+    var empty_body_error_message = "你添加的todo是空的！"
 </script>
 </body>
 </html>

@@ -31,12 +31,15 @@ def register_blueprints(app):
     app.register_blueprint(auth)
     from .blueprints.home import home
     app.register_blueprint(home)
+    from .blueprints.todo import todo
+    app.register_blueprint(todo)
 
 
 def register_extensions(app):
     db.init_app(app)
     login_manager.init_app(app)
     csrf.init_app(app)
+
 
 
 
